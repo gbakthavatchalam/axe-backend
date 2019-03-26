@@ -17,14 +17,16 @@ from django.contrib import admin
 from django.urls import path
 from django.conf.urls import url, include
 from rest_framework import routers
+from rest_framework_expiring_authtoken import views as auth_views
 from event import views
 
 router = routers.DefaultRouter()
-router.register('user', views.UserViewSet)
-router.register('event', views.EventViewSet)
-router.register('response', views.EventAcceptanceViewSet)
+router.register('api/event', views.EventViewSet)
+router.register('api/response', views.EventAcceptanceViewSet)
+router.register('api/profile', views.SignUpViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     url(r'^', include(router.urls)),
+    path('api/auth/', auth_views.obtain_expiring_auth_token, name='api_token_auth')
 ]
