@@ -36,3 +36,5 @@ CONSTRAINT `FK_20` FOREIGN KEY `fkIdx_20` (`event_id`) REFERENCES `event` (`id`)
 KEY `fkIdx_25` (`participant`),
 CONSTRAINT `FK_25` FOREIGN KEY `fkIdx_25` (`participant`) REFERENCES `auth_user` (`id`)
 );
+
+ALTER TABLE `auth_user` ADD COLUMN `display_name` VARCHAR(150);

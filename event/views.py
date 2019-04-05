@@ -98,11 +98,19 @@ class SignUpViewSet(viewsets.ModelViewSet):
     """Has custom authentication. For password updation, authentication is done through OTP process.
     For other profile detail update, a valid token is required
     """
-    http_method_names = ('post', 'patch')
+    http_method_names = ('post', 'patch', 'get')
 
     queryset = AuthUser.objects.all()
     serializer_class = SignUpSerializer
     lookup_field = 'username'
+
+    def list(self, *args, **kwars):
+        return HttpResponseServerError(content=b'Not Implemented')
+
+    def retrieve(self, request, *args, **kawrgs):
+        if isinstance(request.user, AnonymousUser):
+             return Response(status=401, data={"message": "Invalid authorization"})
+        return super(SignUpViewSet, self).retrieve(request, *args, **kwargs)
 
     def partial_update(self, request, *args, **kwargs):
         """Allow update of password and is_active without Authorization

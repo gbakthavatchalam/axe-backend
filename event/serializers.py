@@ -93,6 +93,13 @@ class SignUpSerializer(serializers.ModelSerializer):
         model = AuthUser
         fields = ('username', 'first_name', 'last_name', 'display_name', 'email', 'password', 'is_active')
 
+    @property
+    def _readable_fields(self):
+        return [
+            field for field_name, field in self.fields.items()
+            if not field.write_only and field_name != 'password'
+        ]
+
     def create(self, validated_data):
         validated_data['display_name'] = validated_data['first_name'] + ' ' + validated_data['last_name']
         validated_data['is_superuser'] = 0
