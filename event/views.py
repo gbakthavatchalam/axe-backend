@@ -107,7 +107,7 @@ class SignUpViewSet(viewsets.ModelViewSet):
     def list(self, *args, **kwars):
         return HttpResponseServerError(content=b'Not Implemented')
 
-    def retrieve(self, request, *args, **kawrgs):
+    def retrieve(self, request, *args, **kwargs):
         if isinstance(request.user, AnonymousUser):
              return Response(status=401, data={"message": "Invalid authorization"})
         return super(SignUpViewSet, self).retrieve(request, *args, **kwargs)
